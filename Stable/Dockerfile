@@ -23,8 +23,7 @@ COPY rspamd.conf.local.override /etc/rspamd/
 COPY worker-controller.inc /etc/rspamd/override.d/
 COPY worker-proxy.inc /etc/rspamd/override.d/
 
-# Keep database and configuration persistent
-VOLUME /etc/rspamd/local.d
+# Keep database persistent
 VOLUME /var/lib/rspamd
 
 # Port 11334 is for web frontend
@@ -33,7 +32,7 @@ VOLUME /var/lib/rspamd
 EXPOSE 11332 11334
 
 # Healtcheck if Rspamd is returning stats
-HEALTHCHECK --interval=1m --timeout=5s --start-period=10s \
+HEALTHCHECK --interval=5m --timeout=5s --start-period=10s \
 	CMD /usr/bin/rspamadm control stat || exit 1
 
 # Run Rspamd
